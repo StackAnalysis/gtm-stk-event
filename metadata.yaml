@@ -1,5 +1,5 @@
-homepage: "https://github.com/gtm-templates-knowit-experience/"
-documentation: "https://github.com/gtm-templates-knowit-experience/gtm-hotjar-event"
+homepage: "https://github.com/StackAnalysis/gtm-stk-event"
+documentation: "https://github.com/StackAnalysis/gtm-stk-event"
 versions:
   # Latest version
   - sha: e19231212086e7bb9b6d4309bb0aa824bcd8ebb2
