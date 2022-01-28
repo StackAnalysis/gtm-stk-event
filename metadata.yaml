@@ -2,5 +2,5 @@ homepage: "https://github.com/StackAnalysis/gtm-stk-event"
 documentation: "https://github.com/StackAnalysis/gtm-stk-event"
 versions:
   # Latest version
-  - sha: e19231212086e7bb9b6d4309bb0aa824bcd8ebb2
+  - sha: 325e7abeb7f8cad1c44ca128a4aeb2548a815541
     changeNotes: Initial release.
