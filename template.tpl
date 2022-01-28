@@ -70,20 +70,13 @@ const log = require('logToConsole');
 const encodeUriComponent = require('encodeUriComponent');
 const injectScript = require('injectScript');
 
-const trackingUrl = "https://cdn.stackanalytix.com/v1/tracking/pixel";
-const excJs = "https://cdn.stackanalytix.com/v1/tracking/R?webid=" + data.stkProjectId + "&clientId="+data.stkCustomerId;
+const trackingUrl = "https://cdn.stackanalytix.com/v1/tracking/R/" + data.stkProjectId + "/"+data.stkCustomerId;
 
 const onSuccess = () => {
   log('Stack Analytix loaded successfully.');
-  injectScript(excJs, data.gtmOnSuccess2, data.gtmOnFailure);
-  //new StackAnalytix("" + data.stkProjectId, "" + data.stkCustomerId).Start()
   data.gtmOnSuccess();
 };
 
-const onSuccess2 = () => {
-  log('Stack Analytix loaded successfully.');
-  data.gtmOnSuccess();
-};
 
 const onFailure = () => {
   log('Stack Analytix failed to load.');
@@ -153,6 +146,6 @@ scenarios: []
 
 ___NOTES___
 
-Created on 1/29/2022, 1:01:31 AM
+Created on 1/29/2022, 1:22:43 AM
 
 
