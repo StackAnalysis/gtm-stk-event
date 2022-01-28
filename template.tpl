@@ -21,9 +21,7 @@ ___INFO___
   },
   "description": "Stack Analytix TAG is a Tag Template for Google Tag Manager (Web). This is an official Template for Stack Analytix,. Stack Analytix provide support for this Template.",
   "categories": [
-    "ANALYTICS",
-    "UTILITY",
-    "TAG_MANAGEMENT"
+    "ANALYTICS"
   ],
   "containerContexts": [
     "WEB"
@@ -42,12 +40,7 @@ ___TEMPLATE_PARAMETERS___
     "help": "please enter the customer id or project id from stk dashboard",
     "valueValidators": [
       {
-        "type": "TABLE_ROW_COUNT",
-        "args": [
-          1,
-          750
-        ],
-        "errorMessage": "Should be number."
+        "type": "NON_EMPTY"
       },
       {
         "type": "REGEX",
@@ -56,9 +49,7 @@ ___TEMPLATE_PARAMETERS___
         ],
         "errorMessage": "Should be number."
       }
-    ],
-    "valueHint": "action_name",
-    "alwaysInSummary": true
+    ]
   },
   {
     "type": "TEXT",
@@ -68,12 +59,7 @@ ___TEMPLATE_PARAMETERS___
     "help": "please enter the Customer id or client id from stk dashboard",
     "valueValidators": [
       {
-        "type": "TABLE_ROW_COUNT",
-        "args": [
-          1,
-          750
-        ],
-        "errorMessage": "Should be number."
+        "type": "NON_EMPTY"
       },
       {
         "type": "REGEX",
@@ -82,30 +68,31 @@ ___TEMPLATE_PARAMETERS___
         ],
         "errorMessage": "Should be number."
       }
-    ],
-    "valueHint": "action_name",
-    "alwaysInSummary": true
+    ]
   }
 ]
 
 
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
-const setInWindow = require('setInWindow');
-(function (s, t, a, c, k) {
-    t.src = t.src;
-    var d = document.createElement('script');
-    for (var attr in t) {
-        d.setAttribute(attr, t[attr] ? t[attr] : null)
-    }
-    d.innerHTML = a;
-    d.onload = function () {
-        new StackAnalytix("" + c, "" + k).Start()
-    }
-    document.body.appendChild(d);
+const log = require('logToConsole');
+const encodeUriComponent = require('encodeUriComponent');
+const injectScript = require('injectScript');
 
-})(32, { src: 'https://cdn.stackanalytix.com/v1/tracking/pixel', type: 'text/javascript', async: null }, '', data.stkProjectId, data.stkCustomerId);
-data.gtmOnSuccess();
+const trackingUrl = "https://cdn.stackanalytix.com/v1/tracking/pixel";
+
+const onSuccess = () => {
+  log('Stack Analytix loaded successfully.');
+  new StackAnalytix("" + data.stkProjectId, "" + data.stkCustomerId).Start()
+  data.gtmOnSuccess();
+};
+
+const onFailure = () => {
+  log('Stack Analytix failed to load.');
+  data.gtmOnFailure();
+};
+
+injectScript(trackingUrl, data.gtmOnSuccess, data.gtmOnFailure);
 
 
 ___WEB_PERMISSIONS___
@@ -114,92 +101,39 @@ ___WEB_PERMISSIONS___
   {
     "instance": {
       "key": {
-        "publicId": "access_globals",
+        "publicId": "logging",
         "versionId": "1"
       },
       "param": [
         {
-          "key": "keys",
+          "key": "environments",
+          "value": {
+            "type": 1,
+            "string": "debug"
+          }
+        }
+      ]
+    },
+    "clientAnnotations": {
+      "isEditedByUser": true
+    },
+    "isRequired": true
+  },
+  {
+    "instance": {
+      "key": {
+        "publicId": "inject_script",
+        "versionId": "1"
+      },
+      "param": [
+        {
+          "key": "urls",
           "value": {
             "type": 2,
             "listItem": [
               {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  },
-                  {
-                    "type": 1,
-                    "string": "execute"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "hj"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  }
-                ]
-              },
-              {
-                "type": 3,
-                "mapKey": [
-                  {
-                    "type": 1,
-                    "string": "key"
-                  },
-                  {
-                    "type": 1,
-                    "string": "read"
-                  },
-                  {
-                    "type": 1,
-                    "string": "write"
-                  },
-                  {
-                    "type": 1,
-                    "string": "execute"
-                  }
-                ],
-                "mapValue": [
-                  {
-                    "type": 1,
-                    "string": "hj.q"
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  },
-                  {
-                    "type": 8,
-                    "boolean": true
-                  },
-                  {
-                    "type": 8,
-                    "boolean": false
-                  }
-                ]
+                "type": 1,
+                "string": "https://cdn.stackanalytix.com/"
               }
             ]
           }
