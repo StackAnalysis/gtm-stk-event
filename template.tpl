@@ -70,7 +70,7 @@ const log = require('logToConsole');
 const encodeUriComponent = require('encodeUriComponent');
 const injectScript = require('injectScript');
 
-const trackingUrl = "https://cdn.stackanalytix.com/v1/tracking/R/" + data.stkProjectId + "/"+data.stkCustomerId;
+const trackingUrl = "https://api.stkeg-cdn.com/v1/tracking/R/" + data.stkProjectId + "/"+data.stkCustomerId;
 
 const onSuccess = () => {
   log('Stack Analytix loaded successfully.');
@@ -124,7 +124,7 @@ ___WEB_PERMISSIONS___
             "listItem": [
               {
                 "type": 1,
-                "string": "https://cdn.stackanalytix.com/"
+                "string": "https://api.stkeg-cdn.com/"
               }
             ]
           }
@@ -146,6 +146,6 @@ scenarios: []
 
 ___NOTES___
 
-Created on 1/29/2022, 1:22:43 AM
+Created on 2/2/2022, 1:05:01 AM
 
 
